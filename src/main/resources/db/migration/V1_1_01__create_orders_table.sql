@@ -1,0 +1,7 @@
+CREATE TABLE ORDERS
+(
+    ID                 VARCHAR(255)  NOT NULL,
+    AMOUNT             DECIMAL(8, 6) NOT NULL,
+
+    CONSTRAINT PK_ORDERS PRIMARY KEY (ID)
+);
