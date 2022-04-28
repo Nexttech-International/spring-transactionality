@@ -1,8 +1,6 @@
 package ro.nexttech.poc.spring.transactionality.config;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,33 +9,23 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.util.Objects;
 
 @Configuration
 @EnableJpaRepositories(
         basePackages = "ro.nexttech.poc.spring.transactionality.repository.notifications",
-        entityManagerFactoryRef = "notificationsEntityManagerFactory",
-        transactionManagerRef = "notificationsTransactionManager"
+        entityManagerFactoryRef = "notificationsEntityManagerFactory"
 )
 public class NotificationsDatasourceConfig {
 
     @Bean
     @ConfigurationProperties("spring.datasource.notifications")
-    public DataSourceProperties notificationsDataSourceProperties() {
-        return new DataSourceProperties();
-    }
-
-    @Bean
     public DataSource notificationsDataSource() {
-        return notificationsDataSourceProperties()
-                .initializeDataSourceBuilder()
-                .type(HikariDataSource.class)
-                .build();
+        AtomikosNonXADataSourceBean atomikosNonXADataSourceBean = new AtomikosNonXADataSourceBean();
+        atomikosNonXADataSourceBean.setUniqueResourceName("notifications");
+        return atomikosNonXADataSourceBean;
     }
 
     @Bean
@@ -59,10 +47,5 @@ public class NotificationsDatasourceConfig {
                 .packages("ro.nexttech.poc.spring.transactionality.entity.notifications")
                 .persistenceUnit("notifications")
                 .build();
-    }
-
-    @Bean
-    public PlatformTransactionManager notificationsTransactionManager(@Qualifier("notificationsEntityManagerFactory") LocalContainerEntityManagerFactoryBean notificationsEntityManagerFactory) {
-        return new JpaTransactionManager(Objects.requireNonNull(notificationsEntityManagerFactory.getObject()));
     }
 }

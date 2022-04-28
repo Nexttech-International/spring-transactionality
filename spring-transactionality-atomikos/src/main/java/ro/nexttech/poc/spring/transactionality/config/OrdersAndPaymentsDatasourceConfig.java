@@ -1,8 +1,6 @@
 package ro.nexttech.poc.spring.transactionality.config;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -12,35 +10,24 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.util.Objects;
 
 @Configuration
 @EnableJpaRepositories(
         basePackages = "ro.nexttech.poc.spring.transactionality.repository.ordersandpayments",
-        entityManagerFactoryRef = "ordersAndPaymentsEntityManagerFactory",
-        transactionManagerRef = "ordersAndPaymentsTransactionManager"
+        entityManagerFactoryRef = "ordersAndPaymentsEntityManagerFactory"
 )
 public class OrdersAndPaymentsDatasourceConfig {
 
     @Primary
     @Bean
     @ConfigurationProperties("spring.datasource.ordersandpayments")
-    public DataSourceProperties ordersAndPaymentsDataSourceProperties() {
-        return new DataSourceProperties();
-    }
-
-    @Primary
-    @Bean
     public DataSource ordersAndPaymentsDataSource() {
-        return ordersAndPaymentsDataSourceProperties()
-                .initializeDataSourceBuilder()
-                .type(HikariDataSource.class)
-                .build();
+        AtomikosNonXADataSourceBean atomikosNonXADataSourceBean = new AtomikosNonXADataSourceBean();
+        atomikosNonXADataSourceBean.setUniqueResourceName("ordersandpayments");
+        return atomikosNonXADataSourceBean;
     }
 
     @Primary
@@ -64,11 +51,5 @@ public class OrdersAndPaymentsDatasourceConfig {
                 .packages("ro.nexttech.poc.spring.transactionality.entity.ordersandpayments")
                 .persistenceUnit("ordersandpayments")
                 .build();
-    }
-
-    @Primary
-    @Bean
-    public PlatformTransactionManager ordersAndPaymentsTransactionManager(@Qualifier("ordersAndPaymentsEntityManagerFactory") LocalContainerEntityManagerFactoryBean ordersAndPaymentsEntityManagerFactory) {
-        return new JpaTransactionManager(Objects.requireNonNull(ordersAndPaymentsEntityManagerFactory.getObject()));
     }
 }
