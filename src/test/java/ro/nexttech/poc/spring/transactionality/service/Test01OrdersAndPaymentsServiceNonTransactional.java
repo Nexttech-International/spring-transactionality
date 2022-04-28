@@ -8,8 +8,10 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ro.nexttech.poc.spring.transactionality.repository.OrderRepository;
-import ro.nexttech.poc.spring.transactionality.repository.PaymentRepository;
+import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.OrderEntity;
+import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.PaymentEntity;
+import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.OrderRepository;
+import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.PaymentRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,11 +19,11 @@ import static org.mockito.Mockito.doThrow;
 import static ro.nexttech.poc.spring.transactionality.service.Constants.*;
 
 /**
- * Testing {@link OrdersAndPaymentsService#addOrderAndPayment_nonTransactional}
+ * Testing {@link OrdersAndPaymentsService#addOrderAndPayment_nonTransactional(OrderEntity, PaymentEntity)}
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class Test01OrdersAndPaymentsServiceImplNonTransactional {
+public class Test01OrdersAndPaymentsServiceNonTransactional {
 
     @SpyBean
     private OrderRepository orderRepository;

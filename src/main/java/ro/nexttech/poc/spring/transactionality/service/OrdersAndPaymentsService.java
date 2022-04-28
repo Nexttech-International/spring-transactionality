@@ -1,7 +1,7 @@
 package ro.nexttech.poc.spring.transactionality.service;
 
-import ro.nexttech.poc.spring.transactionality.entity.OrderEntity;
-import ro.nexttech.poc.spring.transactionality.entity.PaymentEntity;
+import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.OrderEntity;
+import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.PaymentEntity;
 
 public interface OrdersAndPaymentsService {
 

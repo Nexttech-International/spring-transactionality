@@ -1,4 +1,4 @@
-package ro.nexttech.poc.spring.transactionality.entity;
+package ro.nexttech.poc.spring.transactionality.entity.ordersandpayments;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,4 @@ public class OrderEntity {
     @GeneratedValue(generator = "SEQ_ORDERS")
     @GenericGenerator(name = "SEQ_ORDERS", strategy = "uuid2")
     private String id;
-
-    @Column(name = "AMOUNT")
-    private Double amount;
 }
