@@ -1,9 +1,6 @@
-server:
-  port: 8080
-
 spring:
   datasource:
-    url: jdbc:h2:mem:spring_transactionality;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:spring_transactionality;MODE=PostgreSQL
     username: root
     password: root
     driverClassName: org.h2.Driver
@@ -15,23 +12,6 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
-    open-in-view: true
-  flyway:
-    enabled: true
-    validate-on-migrate: true
-    out-of-order: true
-    locations:
-      - classpath:/db/migration
-  h2:
-    console:
-      enabled: true
-
-springdoc:
-  swagger-ui:
-    disable-swagger-default-url: true
-    path: /swagger-ui.html
-  use-fqn: true
-
 logging:
   level:
     org.hibernate.SQL: DEBUG

@@ -1,8 +1,8 @@
 package ro.nexttech.poc.spring.transactionality.service;
 
-import ro.nexttech.poc.spring.transactionality.dto.OrdersAndPaymentsDTO;
-
 public interface OrdersAndPaymentsService {
 
-    OrdersAndPaymentsDTO findOrdersAndPayments();
+    void addOrderAndPayment_noTransactional(double orderAmount, String paymentMethod);
+
+    void addOrderAndPayment_noTransactional2(double orderAmount, String paymentMethod);
 }
