@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:spring_transactionality;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    username: root
+    password: root
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: true
+  h2:
+    console:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+  use-fqn: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
