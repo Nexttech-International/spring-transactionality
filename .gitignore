@@ -1,0 +1,12 @@
+# Intellij IDEA
+.idea
+*.iml
+
+# Java
+out
+
+# Maven
+target
+
+# H2 Local Development File-based Database
+h2-file-db
