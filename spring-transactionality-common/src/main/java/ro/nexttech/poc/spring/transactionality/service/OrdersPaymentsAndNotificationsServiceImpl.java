@@ -3,10 +3,10 @@ package ro.nexttech.poc.spring.transactionality.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ro.nexttech.poc.spring.transactionality.repository.notifications.NotificationRepository;
 import ro.nexttech.poc.spring.transactionality.entity.notifications.NotificationEntity;
 import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.OrderEntity;
 import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.PaymentEntity;
-import ro.nexttech.poc.spring.transactionality.repository.notifications.NotificationRepository;
 import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.OrderRepository;
 import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.PaymentRepository;
 

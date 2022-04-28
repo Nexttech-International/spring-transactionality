@@ -1,5 +1,6 @@
 package ro.nexttech.poc.spring.transactionality.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,12 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.OrderEntity;
-import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.PaymentEntity;
 import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.OrderRepository;
 import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.PaymentRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
-import static ro.nexttech.poc.spring.transactionality.service.Constants.*;
 
 /**
  * Testing {@link OrdersAndPaymentsService#addOrderAndPayment_nonTransactional(OrderEntity, PaymentEntity)}
@@ -36,7 +34,7 @@ public class Test01OrdersAndPaymentsServiceNonTransactional {
     @Test
     @DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
     public void addOrderAndPayment_nonTransactional() {
-        service.addOrderAndPayment_nonTransactional(orderEntity, paymentEntity);
+        service.addOrderAndPayment_nonTransactional(Constants.orderEntity, Constants.paymentEntity);
 
         assertEquals(1, orderRepository.count());
         assertEquals(1, paymentRepository.count());
@@ -45,11 +43,11 @@ public class Test01OrdersAndPaymentsServiceNonTransactional {
     @Test
     @DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
     public void addOrderAndPayment_nonTransactional_throwException() {
-        doThrow(new RuntimeException(ERROR_MESSAGE)).when(paymentRepository).save(paymentEntity);
+        doThrow(new RuntimeException(Constants.ERROR_MESSAGE)).when(paymentRepository).save(Constants.paymentEntity);
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderAndPayment_nonTransactional(orderEntity, paymentEntity));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderAndPayment_nonTransactional(Constants.orderEntity, Constants.paymentEntity));
 
-        assertEquals(ERROR_MESSAGE, runtimeException.getMessage());
+        Assertions.assertEquals(Constants.ERROR_MESSAGE, runtimeException.getMessage());
         assertEquals(1, orderRepository.count());
         assertEquals(0, paymentRepository.count());
     }
