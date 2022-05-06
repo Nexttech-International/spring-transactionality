@@ -18,6 +18,11 @@
             <artifactId>spring-transactionality-common</artifactId>
         </dependency>
         <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>spring-transactionality-common</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jta-atomikos</artifactId>
         </dependency>

@@ -1,4 +1,4 @@
-package ro.nexttech.poc.spring.transactionality;
+package ro.nexttech.poc.spring.transactionality.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,9 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ro.nexttech.poc.spring.transactionality.Constants;
+import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.OrderEntity;
+import ro.nexttech.poc.spring.transactionality.entity.ordersandpayments.PaymentEntity;
 import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.OrderRepository;
 import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.PaymentRepository;
-import ro.nexttech.poc.spring.transactionality.service.OrdersAndPaymentsService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -29,6 +29,7 @@
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
 
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -37,6 +38,12 @@
                 <groupId>${groupId}</groupId>
                 <artifactId>spring-transactionality-common</artifactId>
                 <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${groupId}</groupId>
+                <artifactId>spring-transactionality-common</artifactId>
+                <version>${version}</version>
+                <type>test-jar</type>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -108,6 +115,18 @@
                             <version>${junit-jupiter.version}</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

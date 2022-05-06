@@ -8,7 +8,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 import javax.transaction.SystemException;
 
 @Configuration
-public class AtomikosConfig {
+public class TransactionManagerConfig {
 
     @Bean(initMethod = "init", destroyMethod = "close")
     public UserTransactionManager userTransactionManager() throws SystemException {

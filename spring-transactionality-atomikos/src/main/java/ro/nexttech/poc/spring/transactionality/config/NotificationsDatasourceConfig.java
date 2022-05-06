@@ -1,6 +1,8 @@
 package ro.nexttech.poc.spring.transactionality.config;
 
 import com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatform;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 @Configuration
 @EnableJpaRepositories(
@@ -46,6 +49,10 @@ public class NotificationsDatasourceConfig {
                 .dataSource(notificationsDataSource())
                 .packages("ro.nexttech.poc.spring.transactionality.entity.notifications")
                 .persistenceUnit("notifications")
+                .properties(Map.of(
+                        AvailableSettings.JTA_PLATFORM, AtomikosJtaPlatform.class,
+                        AvailableSettings.JPA_TRANSACTION_TYPE, "JTA"
+                ))
                 .build();
     }
 }
