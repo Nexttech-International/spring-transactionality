@@ -65,11 +65,11 @@ public class Test04OrdersPaymentsAndNotificationsServiceTransactional {
     public void addOrderPaymentAndNotification_transactional_throwException2() {
         doThrow(new RuntimeException(Constants.ERROR_MESSAGE)).when(notificationRepository).save(Constants.notificationEntity);
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderPaymentAndNotification_transactional_notificationsTransactionManager(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderPaymentAndNotification_transactional(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity));
 
         Assertions.assertEquals(Constants.ERROR_MESSAGE, runtimeException.getMessage());
-        assertEquals(1, orderRepository.count());
-        assertEquals(1, paymentRepository.count());
+        assertEquals(0, orderRepository.count());
+        assertEquals(0, paymentRepository.count());
         assertEquals(0, notificationRepository.count());
     }
 }

@@ -21,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 
 /**
- * Testing {@link OrdersPaymentsAndNotificationsService#addOrderPaymentAndNotification_nonTransactional(OrderEntity, PaymentEntity, NotificationEntity)}
+ * Testing {@link OrdersPaymentsAndNotificationsServiceMultipleTM#addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager(OrderEntity, PaymentEntity, NotificationEntity)}
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class Test03OrdersPaymentsAndNotificationsServiceNonTransactional {
+public class Test07OrdersPaymentsAndNotificationsServiceMultipleTMOrdersAndPaymentsTM {
 
     @SpyBean
     private OrderRepository orderRepository;
@@ -35,12 +35,12 @@ public class Test03OrdersPaymentsAndNotificationsServiceNonTransactional {
     private NotificationRepository notificationRepository;
 
     @Autowired
-    private OrdersPaymentsAndNotificationsService service;
+    private OrdersPaymentsAndNotificationsServiceMultipleTM service;
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    public void addOrderPaymentAndNotification_nonTransactional() {
-        service.addOrderPaymentAndNotification_nonTransactional(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity);
+    public void addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager() {
+        service.addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity);
 
         assertEquals(1, orderRepository.count());
         assertEquals(1, paymentRepository.count());
@@ -49,27 +49,27 @@ public class Test03OrdersPaymentsAndNotificationsServiceNonTransactional {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    public void addOrderPaymentAndNotification_nonTransactional_throwException1() {
+    public void addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager_throwException1() {
         doThrow(new RuntimeException(Constants.ERROR_MESSAGE)).when(paymentRepository).save(Constants.paymentEntity);
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderPaymentAndNotification_nonTransactional(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity));
 
         Assertions.assertEquals(Constants.ERROR_MESSAGE, runtimeException.getMessage());
-        assertEquals(1, orderRepository.count());
+        assertEquals(0, orderRepository.count());
         assertEquals(0, paymentRepository.count());
         assertEquals(0, notificationRepository.count());
     }
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    public void addOrderPaymentAndNotification_nonTransactional_throwException2() {
+    public void addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager_throwException2() {
         doThrow(new RuntimeException(Constants.ERROR_MESSAGE)).when(notificationRepository).save(Constants.notificationEntity);
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderPaymentAndNotification_nonTransactional(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> service.addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager(Constants.orderEntity, Constants.paymentEntity, Constants.notificationEntity));
 
         Assertions.assertEquals(Constants.ERROR_MESSAGE, runtimeException.getMessage());
-        assertEquals(1, orderRepository.count());
-        assertEquals(1, paymentRepository.count());
+        assertEquals(0, orderRepository.count());
+        assertEquals(0, paymentRepository.count());
         assertEquals(0, notificationRepository.count());
     }
 }

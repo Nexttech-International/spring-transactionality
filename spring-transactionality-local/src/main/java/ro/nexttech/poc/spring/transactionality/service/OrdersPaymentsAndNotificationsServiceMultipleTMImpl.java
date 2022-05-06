@@ -12,22 +12,23 @@ import ro.nexttech.poc.spring.transactionality.repository.ordersandpayments.Paym
 
 @Service
 @RequiredArgsConstructor
-public class OrdersPaymentsAndNotificationsServiceImpl implements OrdersPaymentsAndNotificationsService {
+public class OrdersPaymentsAndNotificationsServiceMultipleTMImpl implements OrdersPaymentsAndNotificationsServiceMultipleTM {
 
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
     private final NotificationRepository notificationRepository;
 
     @Override
-    public void addOrderPaymentAndNotification_nonTransactional(OrderEntity orderEntity, PaymentEntity paymentEntity, NotificationEntity notificationEntity) {
+    @Transactional(transactionManager = "ordersAndPaymentsTransactionManager")
+    public void addOrderPaymentAndNotification_transactional_ordersAndPaymentsTransactionManager(OrderEntity orderEntity, PaymentEntity paymentEntity, NotificationEntity notificationEntity) {
         orderRepository.save(orderEntity);
         paymentRepository.save(paymentEntity);
         notificationRepository.save(notificationEntity);
     }
 
     @Override
-    @Transactional
-    public void addOrderPaymentAndNotification_transactional(OrderEntity orderEntity, PaymentEntity paymentEntity, NotificationEntity notificationEntity) {
+    @Transactional(transactionManager = "notificationsTransactionManager")
+    public void addOrderPaymentAndNotification_transactional_notificationsTransactionManager(OrderEntity orderEntity, PaymentEntity paymentEntity, NotificationEntity notificationEntity) {
         orderRepository.save(orderEntity);
         paymentRepository.save(paymentEntity);
         notificationRepository.save(notificationEntity);
