@@ -14,11 +14,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>${groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>spring-transactionality-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>${groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>spring-transactionality-common</artifactId>
             <type>test-jar</type>
         </dependency>

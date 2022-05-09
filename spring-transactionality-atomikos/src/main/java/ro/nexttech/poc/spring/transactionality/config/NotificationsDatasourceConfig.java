@@ -1,6 +1,6 @@
 package ro.nexttech.poc.spring.transactionality.config;
 
-import com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean;
+import com.atomikos.jdbc.AtomikosNonXADataSourceBean;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatform;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,6 +28,7 @@ public class NotificationsDatasourceConfig {
     public DataSource notificationsDataSource() {
         AtomikosNonXADataSourceBean atomikosNonXADataSourceBean = new AtomikosNonXADataSourceBean();
         atomikosNonXADataSourceBean.setUniqueResourceName("notifications");
+        atomikosNonXADataSourceBean.setLocalTransactionMode(true);
         return atomikosNonXADataSourceBean;
     }
 

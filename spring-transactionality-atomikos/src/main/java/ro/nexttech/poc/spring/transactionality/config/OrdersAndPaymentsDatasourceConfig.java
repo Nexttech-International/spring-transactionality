@@ -1,6 +1,6 @@
 package ro.nexttech.poc.spring.transactionality.config;
 
-import com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean;
+import com.atomikos.jdbc.AtomikosNonXADataSourceBean;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatform;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -30,6 +30,7 @@ public class OrdersAndPaymentsDatasourceConfig {
     public DataSource ordersAndPaymentsDataSource() {
         AtomikosNonXADataSourceBean atomikosNonXADataSourceBean = new AtomikosNonXADataSourceBean();
         atomikosNonXADataSourceBean.setUniqueResourceName("ordersandpayments");
+        atomikosNonXADataSourceBean.setLocalTransactionMode(true);
         return atomikosNonXADataSourceBean;
     }
 
